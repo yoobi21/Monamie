@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    DashboardActivity Layout — Mon Amie
+    Palette  : #C8873A (golden-brown), #F4EDE4 (cream), #FFFFFF (white)
+    Font     : Playfair Display (heading), Lato (body) via Google Fonts / downloadable fonts
+    Requires : Material Components 1.9+, Glide/Picasso for images
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFAF7"
+    tools:context=".DashboardActivity">
+
+    <!-- ══════════════════════════════════════════════
+         SCROLLABLE CONTENT
+         ══════════════════════════════════════════════ -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ── TOP BAR ─────────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingTop="28dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="12dp">
+
+                <!-- Logo -->
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="Mon Amie Logo"
+                    android:src="@drawable/logo"
+                    tools:src="@tools:sample/avatars" />
+
+                <!-- Greeting -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="8dp">
+
+                    <TextView
+                        android:id="@+id/tvGreeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="Selamat Datang Di Mon Amie,"
+                        android:textColor="#5C4A32"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="Renyahnya Cookies, Legitnya Kopi."
+                        android:textColor="#D9A012"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Cart icon -->
+                <ImageView
+                    android:id="@+id/ivCart"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/bg_icon_circle"
+                    android:contentDescription="Cart"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_cart" />
+
+                <!-- Profile icon -->
+                <ImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icon_circle"
+                    android:contentDescription="Profile"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_profile" />
+
+            </LinearLayout>
+
+            <!-- ── SEARCH BAR ──────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_search_bar"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    android:contentDescription="Search icon"
+                    android:alpha="0.4" />
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:hint="Search..."
+                    android:textColorHint="#B0A090"
+                    android:textColor="#3B2A1A"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+            <!-- ── BANNER — NEW BUNDLE ─────────────────────────────── -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="28dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!-- Text block -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_black"
+                            android:letterSpacing="0.04"
+                            android:text="NEW BUNDLE"
+                            android:textColor="#C8873A"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/lato_regular"
+                            android:lineSpacingMultiplier="1.4"
+                            android:text="Satu bundle, dua kebahagiaan.\nHarga lebih ringan."
+                            android:textColor="#7A5C38"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <!-- Cookie image (right side) -->
+                    <ImageView
+                        android:id="@+id/ivBannerImage"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="-10dp"
+                        android:contentDescription="Bundle cookies"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_cookie_velvet"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- ── SECTION HEADER — For You ───────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="For You"
+                    android:textColor="#C8873A"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/lato_bold"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivSeeAllForYou"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="See all"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+            <!-- ── HORIZONTAL PRODUCT LIST — For You ──────────────── -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvForYou"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:clipToPadding="false"
+                android:layout_marginBottom="28dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_product_card"
+                tools:itemCount="4" />
+
+            <!-- ── SECTION HEADER — Special for you ──────────────── -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Special for you"
+                android:textColor="#C8873A"
+                android:textSize="16sp"
+                android:fontFamily="@font/lato_bold"
+                android:textStyle="bold"
+                android:paddingStart="20dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- ── SPECIAL ITEMS — Vertical list ──────────────────── -->
+            <LinearLayout
+                android:id="@+id/llSpecialItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <!-- Special Item 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#FEF0F0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ivSpecial1"
+                            android:layout_width="86dp"
+                            android:layout_height="86dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_cookie_velvet"
+                            android:contentDescription="Velvet Bundle"
+                            android:layout_marginEnd="16dp"
+                            tools:src="@tools:sample/backgrounds/scenic" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Velvet Bundle"
+                                android:textColor="#C8502A"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cookies + Kopi"
+                                android:textColor="#9E8070"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/lato_regular"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="8dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rp. 8,000"
+                                android:textColor="#C8502A"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- Special Item 2 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#FEF0F0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ivSpecial2"
+                            android:layout_width="86dp"
+                            android:layout_height="86dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_cookie_velvet"
+                            android:contentDescription="Matcha Bundle"
+                            android:layout_marginEnd="16dp"
+                            tools:src="@tools:sample/backgrounds/scenic" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Matcha Bundle"
+                                android:textColor="#C8502A"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cookies + Minuman"
+                                android:textColor="#9E8070"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/lato_regular"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="8dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rp. 8,000"
+                                android:textColor="#C8502A"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+            <!-- end special items -->
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ══════════════════════════════════════════════
+         BOTTOM NAVIGATION BAR (floating pill style)
+         ══════════════════════════════════════════════ -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="48dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="35dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/navHome"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_nav_home"
+                android:contentDescription="Home" />
+
+            <ImageView
+                android:id="@+id/navWishlist"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_nav_wishlist"
+                android:contentDescription="Wishlist" />
+
+            <ImageView
+                android:id="@+id/navOrders"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_nav_orders"
+                android:contentDescription="Orders" />
+
+            <ImageView
+                android:id="@+id/navProfile"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_nav_profile"
+                android:contentDescription="Profile" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

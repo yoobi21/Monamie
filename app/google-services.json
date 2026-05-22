@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "216384880936",
+    "project_id": "monamie-a5379",
+    "storage_bucket": "monamie-a5379.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216384880936:android:02fe7927747271a3b4501d",
+        "android_client_info": {
+          "package_name": "com.android.monamie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6XerCOEHxrS8jwdTB1jZC86BFn8UF2X0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

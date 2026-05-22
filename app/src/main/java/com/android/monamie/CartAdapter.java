@@ -1,0 +1,77 @@
+package com.android.monamie;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
+
+    public interface OnCartChangeListener {
+        void onCartChanged();
+    }
+
+    private final List<CartItem>    items;
+    private final OnCartChangeListener listener;
+    private final NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("id","ID"));
+
+    public CartAdapter(List<CartItem> items, OnCartChangeListener listener) {
+        this.items    = items;
+        this.listener = listener;
+    }
+
+    public static class VH extends RecyclerView.ViewHolder {
+        ImageView ivItem, ivPlus, ivMinus;
+        TextView  tvName, tvPrice, tvQty;
+
+        public VH(@NonNull View v) {
+            super(v);
+            ivItem  = v.findViewById(R.id.ivCartItem);
+            ivPlus  = v.findViewById(R.id.ivCartPlus);
+            ivMinus = v.findViewById(R.id.ivCartMinus);
+            tvName  = v.findViewById(R.id.tvCartItemName);
+            tvPrice = v.findViewById(R.id.tvCartItemPrice);
+            tvQty   = v.findViewById(R.id.tvCartQty);
+        }
+    }
+
+    @NonNull @Override
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new VH(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_cart, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull VH h, int pos) {
+        CartItem item = items.get(pos);
+        h.ivItem.setImageResource(item.getImageRes());
+        h.tvName.setText(item.getName());
+        h.tvPrice.setText("Rp. " + fmt.format(item.getPrice()));
+        h.tvQty.setText(String.valueOf(item.getQuantity()));
+
+        h.ivPlus.setOnClickListener(v -> {
+            CartManager.getInstance().updateQty(item.getProductId(), item.getQuantity() + 1);
+            notifyItemChanged(pos);
+            if (listener != null) listener.onCartChanged();
+        });
+
+        h.ivMinus.setOnClickListener(v -> {
+            int newQty = item.getQuantity() - 1;
+            CartManager.getInstance().updateQty(item.getProductId(), newQty);
+            if (newQty <= 0) {
+                notifyItemRemoved(pos);
+            } else {
+                notifyItemChanged(pos);
+            }
+            if (listener != null) listener.onCartChanged();
+        });
+    }
+
+    @Override public int getItemCount() { return items.size(); }
+}

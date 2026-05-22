@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="mon_amie_gold">#C8873A</color>
+    <color name="mon_amie_red">#C8502A</color>
+    <color name="mon_amie_cream">#F4EDE4</color>
+    <color name="mon_amie_cream_light">#FDFAF7</color>
+    <color name="mon_amie_peach">#FEF0F0</color>
+    <color name="mon_amie_banner_bg">#FFF3DC</color>
+    <color name="mon_amie_brown_dark">#1A1008</color>
+    <color name="mon_amie_brown_mid">#5C4A32</color>
+    <color name="mon_amie_brown_light">#9E8070</color>
+    <color name="mon_amie_icon_bg">#F0EAE0</color>
+    <color name="mon_amie_search_bg">#F0EAE0</color>
+</resources>
+
+
