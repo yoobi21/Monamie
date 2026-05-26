@@ -1,4 +1,4 @@
-package com.android.monamie;
+package com.android.monamie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.widget.Button;
+import com.android.monamie.R;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -62,6 +63,7 @@ public class SplashScreen extends AppCompatActivity {
         // Arahkan ke halaman berikutnya
          Intent intent = new Intent(this, Login.class);
          startActivity(intent);
+         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
          finish(); // tutup splash agar tidak bisa back
     }
 }

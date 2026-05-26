@@ -1,28 +1,28 @@
-package com.android.monamie;
+package com.android.monamie.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.android.monamie.R;
+import com.android.monamie.models.Product;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.VH> {
 
-    public interface OnAddToCartListener {
-        void onAddToCart(Product product);
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
     }
 
-    private final List<Product>       items;
-    private final OnAddToCartListener listener;
+    private final List<Product>          items;
+    private final OnProductClickListener listener;
 
-    public ProductCardAdapter(List<Product> items, OnAddToCartListener listener) {
+    public ProductCardAdapter(List<Product> items, OnProductClickListener listener) {
         this.items    = items;
         this.listener = listener;
     }
@@ -60,8 +60,9 @@ public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.
         NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("id", "ID"));
         holder.tvPrice.setText("Rp. " + fmt.format(product.getPrice()));
 
-        holder.ivAddToCart.setOnClickListener(v -> {
-            if (listener != null) listener.onAddToCart(product);
+        // Klik seluruh card untuk ke detail
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onProductClick(product);
         });
     }
 

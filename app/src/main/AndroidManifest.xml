@@ -12,51 +12,54 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Monamie">
 
-
-
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activities.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
 
-
         <activity
-            android:name=".Login"
+            android:name=".activities.DashboardActivity"
             android:exported="true" />
-        <activity android:name=".Register" />
-        <activity
-            android:name=".SplashScreen"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".activities.Login"
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.Register"
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Monamie" />
+
+        <activity
+            android:name=".activities.ProductDetailActivity"
             android:exported="true"
             android:theme="@style/Theme.Monamie" />
 
         <activity
-            android:name=".CartActivity"
+            android:name=".activities.CartActivity"
             android:exported="false"
             android:theme="@style/Theme.Monamie" />
 
         <activity
-            android:name=".CheckoutActivity"
+            android:name=".activities.CheckoutActivity"
             android:exported="false"
             android:theme="@style/Theme.Monamie" />
 
         <activity
-            android:name=".OrderSuccessActivity"
+            android:name=".activities.OrderSuccessActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Monamie" />
+
+        <activity
+            android:name=".activities.OrderFailedActivity"
             android:exported="false"
             android:theme="@style/Theme.Monamie" />
     </application>

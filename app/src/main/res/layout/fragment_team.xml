@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mon_amie_cream_light">
+
+    <!-- Header tetap di atas -->
+    <TextView
+        android:id="@+id/tvTeamTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="48dp"
+        android:paddingBottom="16dp"
+        android:text="Kelompok 3"
+        android:textColor="#1A1008"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerTeam"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_below="@id/tvTeamTitle"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:clipToPadding="false"
+        android:clipChildren="false" />
+
+    <!-- Indicator Slide -->
+    <LinearLayout
+        android:id="@+id/layoutIndicatorsTeam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewPagerTeam"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal" />
+
+</RelativeLayout>

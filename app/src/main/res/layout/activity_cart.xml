@@ -4,17 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFAF7">
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_main"
+        android:scaleType="centerCrop"
+        android:alpha="0.5" />
 
     <!-- Toolbar -->
     <LinearLayout
         android:id="@+id/cartToolbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="88dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingHorizontal="20dp"
-        android:background="#FDFAF7">
+        android:paddingTop="32dp"
+        android:background="@android:color/transparent"
+        android:elevation="4dp"
+        android:translationZ="10dp">
 
         <ImageView
             android:id="@+id/ivCartBack"
@@ -44,9 +54,9 @@
         android:id="@+id/rvCart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="56dp"
-        android:paddingBottom="140dp"
-        android:paddingHorizontal="20dp"
+        android:paddingTop="88dp"
+        android:paddingBottom="150dp"
+        android:paddingHorizontal="16dp"
         android:clipToPadding="false" />
 
     <!-- Empty state -->
@@ -83,49 +93,57 @@
     </LinearLayout>
 
     <!-- Bottom checkout bar -->
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="bottom"
-        android:background="#FFFFFF"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="20dp"
-        android:elevation="8dp">
+        android:layout_marginBottom="40dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Total Pembayaran"
-                android:textColor="#9E8070"
-                android:textSize="12sp" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvCartTotal"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Pembayaran"
+                    android:textColor="#9E8070"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvCartTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp. 0"
+                    android:textColor="#C8873A"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCheckout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp. 0"
-                android:textColor="#C8873A"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_height="52dp"
+                android:backgroundTint="#C8873A"
+                android:paddingHorizontal="28dp"
+                android:text="Checkout"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp" />
         </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCheckout"
-            android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            android:backgroundTint="#C8873A"
-            android:paddingHorizontal="28dp"
-            android:text="Checkout"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:cornerRadius="16dp" />
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.android.monamie;
+package com.android.monamie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.android.monamie.R;
+import com.android.monamie.adapters.CartAdapter;
+import com.android.monamie.utils.CartManager;
 import com.google.android.material.button.MaterialButton;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -31,7 +34,10 @@ public class CartActivity extends AppCompatActivity {
         tvTotal     = findViewById(R.id.tvCartTotal);
         btnCheckout = findViewById(R.id.btnCheckout);
 
-        findViewById(R.id.ivCartBack).setOnClickListener(v -> finish());
+        findViewById(R.id.ivCartBack).setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
 
         adapter = new CartAdapter(CartManager.getInstance().getItems(), this::refreshUI);
         rvCart.setLayoutManager(new LinearLayoutManager(this));
@@ -39,8 +45,10 @@ public class CartActivity extends AppCompatActivity {
 
         refreshUI();
 
-        btnCheckout.setOnClickListener(v ->
-                startActivity(new Intent(this, CheckoutActivity.class)));
+        btnCheckout.setOnClickListener(v -> {
+            startActivity(new Intent(this, CheckoutActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
     }
 
     @Override protected void onResume() { super.onResume(); refreshUI(); }

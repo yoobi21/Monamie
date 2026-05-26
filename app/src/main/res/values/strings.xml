@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Monamie</string>
+    <string name="greeting_user">Terima kasih sudah memilih kami, %1$s!</string>
 </resources>

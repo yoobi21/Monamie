@@ -1,9 +1,10 @@
-package com.android.monamie;
+package com.android.monamie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.android.monamie.R;
 import com.google.android.material.button.MaterialButton;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -30,6 +31,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DashboardActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
     }
 }

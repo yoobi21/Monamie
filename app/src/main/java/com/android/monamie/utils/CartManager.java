@@ -1,9 +1,9 @@
-package com.android.monamie;
+package com.android.monamie.utils;
 
+import com.android.monamie.models.CartItem;
 import java.util.ArrayList;
 import java.util.List;
 
-// Singleton cart — menyimpan item keranjang selama sesi aktif
 public class CartManager {
 
     private static CartManager instance;

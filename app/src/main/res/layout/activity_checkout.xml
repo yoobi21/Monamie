@@ -1,193 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFAF7">
+    android:background="#FFFFFF">
 
-    <androidx.core.widget.NestedScrollView
+    <!-- Background Image -->
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="100dp"
-        android:clipToPadding="false">
+        android:src="@drawable/bg_main"
+        android:scaleType="centerCrop"
+        android:alpha="0.5" />
 
-        <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="20dp">
+            android:layout_height="match_parent"
+            android:paddingBottom="150dp"
+            android:clipToPadding="false">
 
-            <!-- Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="80dp">
 
-                <ImageView
-                    android:id="@+id/ivCheckoutBack"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_icon_circle"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_arrow_right"
-                    android:rotation="180"
-                    android:contentDescription="Back" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Checkout"
-                    android:textColor="#1A1008"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <View android:layout_width="36dp" android:layout_height="36dp" />
-            </LinearLayout>
-
-            <!-- Alamat pengiriman -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Alamat Pengiriman" android:textColor="#1A1008"
-                android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/etAlamat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/bg_search_bar"
-                android:hint="Nama penerima"
-                android:inputType="textPersonName"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="14dp"
-                android:textSize="14sp"
-                android:textColorHint="#B0A090"
-                android:textColor="#1A1008" />
-
-            <EditText
-                android:id="@+id/etAlamatDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/bg_search_bar"
-                android:hint="Alamat lengkap (jalan, no. rumah)"
-                android:inputType="textMultiLine"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="14dp"
-                android:minLines="2"
-                android:textSize="14sp"
-                android:textColorHint="#B0A090"
-                android:textColor="#1A1008" />
-
-            <EditText
-                android:id="@+id/etNoHp"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_search_bar"
-                android:hint="Nomor WhatsApp"
-                android:inputType="phone"
-                android:paddingHorizontal="16dp"
-                android:textSize="14sp"
-                android:textColorHint="#B0A090"
-                android:textColor="#1A1008" />
-
-            <!-- Metode pembayaran -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Metode Pembayaran" android:textColor="#1A1008"
-                android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="10dp"/>
-
-            <RadioGroup android:id="@+id/rgPayment" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginBottom="20dp">
-
-                <RadioButton android:id="@+id/rbCOD" android:layout_width="match_parent"
-                    android:layout_height="52dp" android:text="Bayar di tempat (COD)"
-                    android:textColor="#1A1008" android:textSize="14sp"
-                    android:checked="true" android:buttonTint="#C8873A"
-                    android:paddingStart="8dp" android:background="@drawable/bg_search_bar"
-                    android:layout_marginBottom="8dp" />
-
-                <RadioButton android:id="@+id/rbTransfer" android:layout_width="match_parent"
-                    android:layout_height="52dp" android:text="Transfer Bank"
-                    android:textColor="#1A1008" android:textSize="14sp"
-                    android:buttonTint="#C8873A" android:paddingStart="8dp"
-                    android:background="@drawable/bg_search_bar" />
-            </RadioGroup>
-
-            <!-- Order summary -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Ringkasan Pesanan" android:textColor="#1A1008"
-                android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="10dp"/>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="#FFFFFF">
-
+                <!-- Header -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:layout_marginBottom="8dp">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Subtotal"
-                            android:textColor="#5C4A32" android:textSize="13sp" />
-                        <TextView android:id="@+id/tvSubtotal" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="Rp. 0"
-                            android:textColor="#1A1008" android:textSize="13sp" android:textStyle="bold" />
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ivCheckoutBack"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_icon_circle"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:rotation="180"
+                        android:contentDescription="Back" />
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal" android:layout_marginBottom="8dp">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Ongkos Kirim"
-                            android:textColor="#5C4A32" android:textSize="13sp" />
-                        <TextView android:id="@+id/tvOngkir" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="Rp. 5,000"
-                            android:textColor="#1A1008" android:textSize="13sp" android:textStyle="bold" />
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Checkout"
+                        android:textColor="#1A1008"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp"
-                        android:background="#F0EAE0" android:layout_marginVertical="8dp"/>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:text="Total"
-                            android:textColor="#1A1008" android:textSize="15sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/tvCheckoutTotal" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="Rp. 0"
-                            android:textColor="#C8873A" android:textSize="16sp" android:textStyle="bold" />
-                    </LinearLayout>
+                    <View android:layout_width="36dp" android:layout_height="36dp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
-    <!-- Order button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnOrder"
+                <!-- Alamat pengiriman -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Alamat Pengiriman" android:textColor="#1A1008"
+                    android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+
+                <EditText
+                    android:id="@+id/etNamaPenerima"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="Nama penerima"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="14dp"
+                    android:textSize="14sp"
+                    android:textColorHint="#B0A090"
+                    android:textColor="#1A1008" />
+
+                <EditText
+                    android:id="@+id/etAlamatLengkap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="Alamat lengkap (jalan, no. rumah)"
+                    android:inputType="textMultiLine"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="14dp"
+                    android:minLines="2"
+                    android:textSize="14sp"
+                    android:textColorHint="#B0A090"
+                    android:textColor="#1A1008" />
+
+                <EditText
+                    android:id="@+id/etNoHp"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="Nomor WhatsApp"
+                    android:inputType="phone"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColorHint="#B0A090"
+                    android:textColor="#1A1008" />
+
+                <!-- Metode pembayaran -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Metode Pembayaran" android:textColor="#1A1008"
+                    android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="12dp"/>
+
+                <RadioGroup android:id="@+id/rgPayment" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginBottom="24dp">
+
+                    <RadioButton android:id="@+id/rbCOD" android:layout_width="match_parent"
+                        android:layout_height="60dp" android:text="Bayar di tempat (COD)"
+                        android:textColor="#1A1008" android:textSize="14sp"
+                        android:checked="true" android:buttonTint="#C8873A"
+                        android:paddingStart="12dp"
+                        android:background="@drawable/bg_payment_selector"
+                        android:layout_marginBottom="10dp"
+                        android:button="@null"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+                        android:paddingEnd="16dp"
+                        android:elevation="0dp" />
+
+                    <RadioButton android:id="@+id/rbTransfer" android:layout_width="match_parent"
+                        android:layout_height="60dp" android:text="Transfer Bank"
+                        android:textColor="#1A1008" android:textSize="14sp"
+                        android:buttonTint="#C8873A"
+                        android:paddingStart="12dp"
+                        android:background="@drawable/bg_payment_selector"
+                        android:button="@null"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+                        android:paddingEnd="16dp"
+                        android:elevation="0dp" />
+                </RadioGroup>
+
+                <!-- Order summary -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Ringkasan Pesanan" android:textColor="#1A1008"
+                    android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="10dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:layout_marginBottom="8dp">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                android:layout_weight="1" android:text="Subtotal"
+                                android:textColor="#5C4A32" android:textSize="13sp" />
+                            <TextView android:id="@+id/tvSubtotal" android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="Rp. 0"
+                                android:textColor="#1A1008" android:textSize="13sp" android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:layout_marginBottom="8dp">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                android:layout_weight="1" android:text="Ongkos Kirim"
+                                android:textColor="#5C4A32" android:textSize="13sp" />
+                            <TextView android:id="@+id/tvOngkir" android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="Rp. 5,000"
+                                android:textColor="#1A1008" android:textSize="13sp" android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp"
+                            android:background="#F0EAE0" android:layout_marginVertical="8dp"/>
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                android:layout_weight="1" android:text="Total"
+                                android:textColor="#1A1008" android:textSize="15sp" android:textStyle="bold" />
+                            <TextView android:id="@+id/tvCheckoutTotal" android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="Rp. 0"
+                                android:textColor="#C8873A" android:textSize="16sp" android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Order button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOrder"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="#C8873A"
+            android:text="Buat Pesanan"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- Loading Overlay -->
+    <LinearLayout
+        android:id="@+id/layoutLoading"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#C8873A"
-        android:text="Buat Pesanan"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:cornerRadius="16dp" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="match_parent"
+        android:background="#CCFFFFFF"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ProgressBar
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:indeterminateTint="#C8873A" />
+
+        <TextView
+            android:id="@+id/tvLoadingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Memproses Pesanan (10s)"
+            android:textColor="#1A1008"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingHorizontal="40dp"/>
+
+        <!-- Virtual Account Popup -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layoutVA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FDF8F3">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvVAInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Virtual Account: 8873 0812 9067 9905\nBank Mandiri a/n Mon Amie"
+                    android:textColor="#5C4A32"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCopyVA"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#C8873A"
+                    android:text="Salin"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:padding="0dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:cornerRadius="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirmPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#C8873A"
+            android:text="Bayar Sekarang"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:visibility="gone"
+            app:cornerRadius="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelOrder"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:strokeColor="#C8873A"
+            app:strokeWidth="1dp"
+            android:text="Batalkan Pesanan"
+            android:textAllCaps="false"
+            android:textColor="#C8873A"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+</FrameLayout>

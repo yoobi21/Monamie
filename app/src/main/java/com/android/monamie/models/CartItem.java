@@ -1,4 +1,4 @@
-package com.android.monamie;
+package com.android.monamie.models;
 
 public class CartItem {
     private String productId;

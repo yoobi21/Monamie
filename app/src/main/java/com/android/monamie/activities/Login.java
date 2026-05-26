@@ -1,4 +1,4 @@
-package com.android.monamie;
+package com.android.monamie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +7,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.android.monamie.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
 
-    private TextInputEditText etEmail;      // Ganti nama dari etUsername
+    private TextInputEditText etEmail;
     private TextInputEditText etPassword;
     private Button btnLogin;
     private TextView tvRegister;
@@ -24,7 +25,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        // Inisialisasi Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         initViews();
@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void initViews() {
-        etEmail = findViewById(R.id.etUsername);      // Sesuai ID di XML kamu
+        etEmail = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
@@ -44,6 +44,7 @@ public class Login extends AppCompatActivity {
         tvRegister.setOnClickListener(v -> {
             Intent intent = new Intent(Login.this, Register.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
     }
 
@@ -51,7 +52,6 @@ public class Login extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // Validasi input
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email tidak boleh kosong");
             etEmail.requestFocus();
@@ -64,16 +64,14 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        // Login ke Firebase
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Login berhasil
                         Toast.makeText(Login.this, "Login Berhasil!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this, DashboardActivity.class));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         finish();
                     } else {
-                        // Login gagal
                         String errorMsg = task.getException() != null ?
                                 task.getException().getMessage() : "Login gagal!";
                         Toast.makeText(Login.this, errorMsg, Toast.LENGTH_LONG).show();

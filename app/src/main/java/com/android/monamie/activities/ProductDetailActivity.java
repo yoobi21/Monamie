@@ -1,18 +1,20 @@
-package com.android.monamie;
+package com.android.monamie.activities;
+
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.android.monamie.R;
+import com.android.monamie.models.CartItem;
+import com.android.monamie.utils.CartManager;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
-    // Keys untuk Intent extra
     public static final String EXTRA_PRODUCT_ID   = "product_id";
     public static final String EXTRA_PRODUCT_NAME = "product_name";
     public static final String EXTRA_PRODUCT_CAT  = "product_category";
@@ -32,7 +34,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
-        // Terima data dari Intent
         productId   = getIntent().getStringExtra(EXTRA_PRODUCT_ID);
         productName = getIntent().getStringExtra(EXTRA_PRODUCT_NAME);
         String category = getIntent().getStringExtra(EXTRA_PRODUCT_CAT);
@@ -40,7 +41,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         int    imageRes = getIntent().getIntExtra(EXTRA_PRODUCT_IMG, R.drawable.img_cookie_velvet);
         String desc     = getIntent().getStringExtra(EXTRA_PRODUCT_DESC);
 
-        // Bind views
         ImageView      ivImage    = findViewById(R.id.ivDetailImage);
         TextView       tvCat      = findViewById(R.id.tvDetailCategory);
         TextView       tvName     = findViewById(R.id.tvDetailName);
@@ -53,7 +53,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvQty   = findViewById(R.id.tvQty);
         tvTotal = findViewById(R.id.tvDetailTotal);
 
-        // Set data
         ivImage.setImageResource(imageRes);
         tvCat.setText(category);
         tvName.setText(productName);
@@ -61,10 +60,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvDesc.setText(desc);
         updateTotal();
 
-        // Back
-        ivBack.setOnClickListener(v -> finish());
+        ivBack.setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
 
-        // Qty controls
         btnMinus.setOnClickListener(v -> {
             if (qty > 1) { qty--; tvQty.setText(String.valueOf(qty)); updateTotal(); }
         });
@@ -72,19 +72,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             qty++; tvQty.setText(String.valueOf(qty)); updateTotal();
         });
 
-        // Add to cart
         btnAddCart.setOnClickListener(v -> {
             CartItem item = new CartItem(productId, productName, price, qty, imageRes);
             CartManager.getInstance().addItem(item);
 
-            Snackbar.make(findViewById(android.R.id.content),
-                            productName + " ditambahkan ke keranjang",
-                            Snackbar.LENGTH_SHORT)
-                    .setBackgroundTint(getColor(R.color.mon_amie_gold))
-                    .setTextColor(getColor(android.R.color.white))
-                    .setAction("Lihat", v2 ->
-                            startActivity(new Intent(this, CartActivity.class)))
-                    .show();
+            startActivity(new Intent(this, CartActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
     }
 

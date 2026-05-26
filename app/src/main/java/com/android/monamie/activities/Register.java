@@ -1,4 +1,4 @@
-package com.android.monamie;
+package com.android.monamie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.android.monamie.R;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,7 +26,7 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register); // Gunakan XML Anda
+        setContentView(R.layout.register);
 
         initViews();
         setupClickListeners();
@@ -35,31 +35,23 @@ public class Register extends AppCompatActivity {
     private void initViews() {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnBuatAkun = findViewById(R.id.btnLogin); // ID btnLogin tapi teksnya "Buat Akun"
-        tvLogin = findViewById(R.id.tvRegister); // ID tvRegister tapi teksnya "Login"
+        btnBuatAkun = findViewById(R.id.btnLogin); 
+        tvLogin = findViewById(R.id.tvRegister);
     }
 
     private void setupClickListeners() {
-        btnBuatAkun.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleRegister();
-            }
-        });
+        btnBuatAkun.setOnClickListener(v -> handleRegister());
 
-        tvLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Kembali ke halaman Login
-                Intent intent = new Intent(Register.this, Login.class);
-                startActivity(intent);
-                finish();
-            }
+        tvLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(Register.this, Login.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
         });
     }
 
     private void handleRegister() {
-        String email = etUsername.getText().toString().trim(); // pake email, bukan username
+        String email = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
@@ -67,15 +59,12 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        // Simpan data registrasi (contoh sederhana)
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Registrasi berhasil!
                         Toast.makeText(Register.this, "Registrasi Berhasil!", Toast.LENGTH_SHORT).show();
 
-                        // Simpan user ke Firestore (opsional, buat profil)
                         String userId = mAuth.getCurrentUser().getUid();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -85,8 +74,8 @@ public class Register extends AppCompatActivity {
 
                         db.collection("users").document(userId).set(user);
 
-                        // Pindah ke Login
                         startActivity(new Intent(Register.this, Login.class));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         finish();
                     } else {
                         Toast.makeText(Register.this, "Gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
