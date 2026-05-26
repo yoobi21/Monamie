@@ -19,7 +19,7 @@ public class CartActivity extends AppCompatActivity {
 
     private RecyclerView rvCart;
     private LinearLayout llEmpty;
-    private TextView     tvTotal;
+    private TextView     tvTotal, tvOriginalTotal;
     private MaterialButton btnCheckout;
     private CartAdapter  adapter;
     private NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("id","ID"));
@@ -32,6 +32,11 @@ public class CartActivity extends AppCompatActivity {
         rvCart      = findViewById(R.id.rvCart);
         llEmpty     = findViewById(R.id.llCartEmpty);
         tvTotal     = findViewById(R.id.tvCartTotal);
+        tvOriginalTotal = findViewById(R.id.tvCartOriginalTotal);
+
+        if (tvOriginalTotal != null) {
+            tvOriginalTotal.setPaintFlags(tvOriginalTotal.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+        }
         btnCheckout = findViewById(R.id.btnCheckout);
 
         findViewById(R.id.ivCartBack).setOnClickListener(v -> {
@@ -60,7 +65,17 @@ public class CartActivity extends AppCompatActivity {
         btnCheckout.setEnabled(!empty);
 
         int total = CartManager.getInstance().getTotal();
+        int originalTotal = CartManager.getInstance().getOriginalTotal();
+
         tvTotal.setText("Rp. " + fmt.format(total));
+        
+        if (total < originalTotal) {
+            tvOriginalTotal.setText("Rp. " + fmt.format(originalTotal));
+            tvOriginalTotal.setVisibility(View.VISIBLE);
+        } else {
+            tvOriginalTotal.setVisibility(View.GONE);
+        }
+
         if (!empty) adapter.notifyDataSetChanged();
     }
 }

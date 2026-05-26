@@ -12,9 +12,15 @@ import java.util.List;
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerViewHolder> {
 
     private final List<Integer> bannerImages;
+    private OnBannerClickListener listener;
 
-    public BannerAdapter(List<Integer> bannerImages) {
+    public interface OnBannerClickListener {
+        void onBannerClick(int position);
+    }
+
+    public BannerAdapter(List<Integer> bannerImages, OnBannerClickListener listener) {
         this.bannerImages = bannerImages;
+        this.listener = listener;
     }
 
     @NonNull
@@ -29,6 +35,9 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         // Use modulo to create endless scroll effect
         int realPosition = position % bannerImages.size();
         holder.ivBanner.setImageResource(bannerImages.get(realPosition));
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onBannerClick(realPosition);
+        });
     }
 
     @Override
