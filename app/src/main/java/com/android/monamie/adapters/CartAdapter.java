@@ -31,7 +31,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
 
     public static class VH extends RecyclerView.ViewHolder {
         ImageView ivItem, ivPlus, ivMinus;
-        TextView  tvName, tvPrice, tvOriginalPrice, tvQty;
+        TextView  tvName, tvPrice, tvQty;
 
         public VH(@NonNull View v) {
             super(v);
@@ -40,7 +40,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             ivMinus = v.findViewById(R.id.ivCartMinus);
             tvName  = v.findViewById(R.id.tvCartItemName);
             tvPrice = v.findViewById(R.id.tvCartItemPrice);
-            tvOriginalPrice = v.findViewById(R.id.tvCartItemOriginalPrice);
             tvQty   = v.findViewById(R.id.tvCartQty);
         }
     }
@@ -59,20 +58,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         h.tvPrice.setText("Rp. " + fmt.format(item.getPrice()));
         h.tvQty.setText(String.valueOf(item.getQuantity()));
 
-        if (item.getPrice() < item.getOriginalPrice()) {
-            h.tvOriginalPrice.setText("Rp. " + fmt.format(item.getOriginalPrice()));
-            h.tvOriginalPrice.setPaintFlags(h.tvOriginalPrice.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
-            h.tvOriginalPrice.setVisibility(View.VISIBLE);
-        } else {
-            h.tvOriginalPrice.setVisibility(View.GONE);
-        }
-
-        // Enabled controls for all items (including promo)
-        h.ivPlus.setAlpha(1.0f);
-        h.ivMinus.setAlpha(1.0f);
-        h.ivPlus.setEnabled(true);
-        h.ivMinus.setEnabled(true);
-        
         h.ivPlus.setOnClickListener(v -> {
             CartManager.getInstance().updateQty(item.getProductId(), item.getQuantity() + 1);
             notifyItemChanged(pos);

@@ -17,9 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.android.monamie.adapters.BannerAdapter;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import com.android.monamie.models.CartItem;
-import com.android.monamie.utils.CartManager;
 import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
@@ -40,7 +37,6 @@ public class HomeFragment extends Fragment {
     private TextView tvUserName, tvSectionTitle;
     private RecyclerView rvProducts;
     private ImageView ivCart, ivProfileTop;
-    private TextView tvCartBadge;
     private ViewPager2 vpBanner;
     private LinearLayout layoutIndicators;
     private EditText etSearch;
@@ -48,8 +44,8 @@ public class HomeFragment extends Fragment {
     private BannerAdapter bannerAdapter;
     private final List<Integer> bannerImages = Arrays.asList(
             R.drawable.banner_monamie,
-            R.drawable.img_cookie_velvet,
-            R.drawable.img_cookie_matcha
+            R.drawable.banner_monamie,
+            R.drawable.banner_monamie
     );
 
     private final List<Product> allProducts = Arrays.asList(
@@ -73,26 +69,8 @@ public class HomeFragment extends Fragment {
         setupTopBarActions();
         setupBanner();
         setupSearch();
-        updateCartBadge();
         
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateCartBadge();
-    }
-
-    private void updateCartBadge() {
-        if (tvCartBadge == null) return;
-        int count = CartManager.getInstance().getTotalQuantity();
-        if (count > 0) {
-            tvCartBadge.setText(String.valueOf(count));
-            tvCartBadge.setVisibility(View.VISIBLE);
-        } else {
-            tvCartBadge.setVisibility(View.GONE);
-        }
     }
 
     private void initViews(View v) {
@@ -101,7 +79,6 @@ public class HomeFragment extends Fragment {
         rvProducts = v.findViewById(R.id.rvProducts);
         ivCart = v.findViewById(R.id.ivCart);
         ivProfileTop = v.findViewById(R.id.ivProfileTop);
-        tvCartBadge = v.findViewById(R.id.tvCartBadge);
         vpBanner = v.findViewById(R.id.vpBanner);
         layoutIndicators = v.findViewById(R.id.layoutIndicators);
         etSearch = v.findViewById(R.id.etSearch);
@@ -131,7 +108,7 @@ public class HomeFragment extends Fragment {
 
     private void setupCategoryListeners() {
         catAll.setOnClickListener(v -> showCategory("All"));
-        catCookies.setOnClickListener(v -> showCategory("Kukis"));
+        catCookies.setOnClickListener(v -> showCategory("Cookies"));
         catKopi.setOnClickListener(v -> showCategory("Kopi"));
     }
 
@@ -149,7 +126,7 @@ public class HomeFragment extends Fragment {
             filteredList.addAll(allProducts);
         } else {
             TextView selectedView = null;
-            if (category.equals("Kukis")) selectedView = catCookies;
+            if (category.equals("Cookies")) selectedView = catCookies;
             else if (category.equals("Kopi")) selectedView = catKopi;
 
             if (selectedView != null) {
@@ -225,54 +202,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupBanner() {
-        bannerAdapter = new BannerAdapter(bannerImages, position -> {
-            int index = position % bannerImages.size();
-            String comboId;
-            String comboName;
-            int promoPrice;
-            int originalPrice;
-            int comboImage = bannerImages.get(index);
-
-            if (index == 0) {
-                // Banner 1: Combo Mon Amie 1 (1 Kopi + 1 Kukis)
-                comboId = "PROMO_COMBO_1";
-                comboName = "Combo Mon Amie 1 (1 Kopi + 1 Kukis)";
-                promoPrice = 15000;
-                originalPrice = 20000;
-            } else if (index == 1) {
-                // Banner 2: Combo Mon Amie 2 (1 Kopi + 2 Kukis)
-                comboId = "PROMO_COMBO_2";
-                comboName = "Combo Mon Amie 2 (1 Kopi + 2 Kukis)";
-                promoPrice = 22000;
-                originalPrice = 30000;
-            } else {
-                // Banner 3: Combo Mon Amie 3 (2 Kopi + 3 Kukis)
-                comboId = "PROMO_COMBO_3";
-                comboName = "Combo Mon Amie 3 (2 Kopi + 3 Kukis)";
-                promoPrice = 45000;
-                originalPrice = 60000;
-            }
-
-            // Agar saat diklik berulang kali jumlahnya bertambah (akumulasi)
-            // kita tidak lagi menghapus item lama sebelum menambah yang baru.
-
-            CartManager.getInstance().addItem(new CartItem(
-                    comboId,
-                    comboName,
-                    promoPrice,
-                    originalPrice,
-                    1,
-                    comboImage,
-                    true // isPromo = true
-            ));
-            
-            updateCartBadge();
-            Toast.makeText(getContext(), comboName + " ditambahkan!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getActivity(), CartActivity.class));
-            if (getActivity() != null) {
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            }
-        });
+        bannerAdapter = new BannerAdapter(bannerImages);
         vpBanner.setAdapter(bannerAdapter);
 
         // Set to middle so it can scroll both ways

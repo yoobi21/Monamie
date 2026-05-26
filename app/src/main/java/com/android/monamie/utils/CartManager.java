@@ -42,33 +42,11 @@ public class CartManager {
 
     public List<CartItem> getItems()  { return items; }
     public int            getCount()  { return items.size(); }
-    public int            getTotalQuantity() {
-        int total = 0;
-        for (CartItem item : items) total += item.getQuantity();
-        return total;
-    }
     public void           clear()     { items.clear(); }
-
-    public void removePromoItems() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            items.removeIf(CartItem::isPromo);
-        } else {
-            java.util.Iterator<CartItem> it = items.iterator();
-            while (it.hasNext()) {
-                if (it.next().isPromo()) it.remove();
-            }
-        }
-    }
 
     public int getTotal() {
         int total = 0;
         for (CartItem item : items) total += item.getSubtotal();
-        return total;
-    }
-
-    public int getOriginalTotal() {
-        int total = 0;
-        for (CartItem item : items) total += item.getOriginalSubtotal();
         return total;
     }
 }

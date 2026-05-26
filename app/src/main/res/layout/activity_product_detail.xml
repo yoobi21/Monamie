@@ -49,51 +49,15 @@
                         android:src="@drawable/img_cookie_velvet" />
 
                     <!-- Back button -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp">
-
-                        <ImageView
-                            android:id="@+id/ivBack"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="Back"
-                            android:padding="8dp"
-                            android:rotation="180"
-                            android:src="@drawable/ic_arrow_right" />
-                    </FrameLayout>
-
-                    <!-- Cart with Badge -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="16dp">
-
-                        <ImageView
-                            android:id="@+id/ivCartDetail"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_cart" />
-
-                        <TextView
-                            android:id="@+id/tvCartBadgeDetail"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="top|end"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginEnd="2dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:backgroundTint="#FF0000"
-                            android:gravity="center"
-                            android:text="0"
-                            android:textColor="#FFFFFF"
-                            android:textSize="9sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-                    </FrameLayout>
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:contentDescription="Back"
+                        android:padding="8dp"
+                        android:rotation="180"
+                        android:src="@drawable/ic_arrow_right" />
                 </FrameLayout>
 
                 <!-- Info card -->
