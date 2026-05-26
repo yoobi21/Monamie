@@ -188,6 +188,13 @@
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                                 android:layout_weight="1" android:text="Total"
                                 android:textColor="#1A1008" android:textSize="15sp" android:textStyle="bold" />
+
+                            <TextView android:id="@+id/tvOriginalTotal" android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="Rp. 0"
+                                android:textColor="#B0A090" android:textSize="13sp"
+                                android:layout_marginEnd="8dp"
+                                android:visibility="gone" />
+
                             <TextView android:id="@+id/tvCheckoutTotal" android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:text="Rp. 0"
                                 android:textColor="#C8873A" android:textSize="16sp" android:textStyle="bold" />

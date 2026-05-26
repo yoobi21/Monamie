@@ -31,7 +31,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private EditText       etNama, etAlamat, etNoHp;
     private RadioGroup     rgPayment;
-    private TextView       tvSubtotal, tvOngkir, tvTotal, tvLoadingStatus, tvVAInfo, btnCopyVA;
+    private TextView       tvSubtotal, tvOngkir, tvTotal, tvOriginalTotal, tvLoadingStatus, tvVAInfo, btnCopyVA;
     private MaterialButton btnOrder, btnCancelOrder, btnConfirmPayment;
     private View           layoutLoading, layoutVA;
     private NumberFormat   fmt = NumberFormat.getNumberInstance(new Locale("id","ID"));
@@ -52,8 +52,14 @@ public class CheckoutActivity extends AppCompatActivity {
         tvSubtotal = findViewById(R.id.tvSubtotal);
         tvOngkir   = findViewById(R.id.tvOngkir);
         tvTotal    = findViewById(R.id.tvCheckoutTotal);
+        tvOriginalTotal = findViewById(R.id.tvOriginalTotal);
         btnOrder   = findViewById(R.id.btnOrder);
         
+        // Strikethrough for original price
+        if (tvOriginalTotal != null) {
+            tvOriginalTotal.setPaintFlags(tvOriginalTotal.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
         layoutLoading   = findViewById(R.id.layoutLoading);
         tvLoadingStatus = findViewById(R.id.tvLoadingStatus);
         tvVAInfo        = findViewById(R.id.tvVAInfo);
@@ -86,9 +92,18 @@ public class CheckoutActivity extends AppCompatActivity {
 
         int subtotal = CartManager.getInstance().getTotal();
         int total    = subtotal + ONGKIR;
+        int originalTotal = CartManager.getInstance().getOriginalTotal() + ONGKIR;
+
         tvSubtotal.setText("Rp. " + fmt.format(subtotal));
         tvOngkir.setText("Rp. " + fmt.format(ONGKIR));
         tvTotal.setText("Rp. " + fmt.format(total));
+
+        if (total < originalTotal) {
+            tvOriginalTotal.setText("Rp. " + fmt.format(originalTotal));
+            tvOriginalTotal.setVisibility(View.VISIBLE);
+        } else {
+            tvOriginalTotal.setVisibility(View.GONE);
+        }
 
         btnOrder.setOnClickListener(v -> submitOrder(subtotal, total));
     }

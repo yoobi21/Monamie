@@ -11,6 +11,7 @@ import com.android.monamie.fragments.HistoryFragment;
 import com.android.monamie.fragments.HomeFragment;
 import com.android.monamie.fragments.ProfileFragment;
 import com.android.monamie.fragments.TeamFragment;
+import com.android.monamie.utils.CartManager;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -28,6 +29,12 @@ public class DashboardActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment(), false);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Promo items are now persistent
     }
 
     private void initViews() {
