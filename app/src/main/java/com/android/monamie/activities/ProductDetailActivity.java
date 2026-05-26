@@ -26,8 +26,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private int price;
     private String productId, productName;
 
-    private TextView tvQty, tvTotal, tvCartBadge;
-    private ImageView ivCartDetail;
+    private TextView tvQty, tvTotal;
     private NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("id","ID"));
 
     @Override
@@ -53,8 +52,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         MaterialButton btnAddCart = findViewById(R.id.btnAddToCart);
         tvQty   = findViewById(R.id.tvQty);
         tvTotal = findViewById(R.id.tvDetailTotal);
-        tvCartBadge = findViewById(R.id.tvCartBadgeDetail);
-        ivCartDetail = findViewById(R.id.ivCartDetail);
 
         ivImage.setImageResource(imageRes);
         tvCat.setText(category);
@@ -62,15 +59,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvPrice.setText("Rp. " + fmt.format(price));
         tvDesc.setText(desc);
         updateTotal();
-        updateCartBadge();
 
         ivBack.setOnClickListener(v -> {
             finish();
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        });
-
-        ivCartDetail.setOnClickListener(v -> {
-            startActivity(new Intent(this, CartActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
 
@@ -88,23 +79,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             startActivity(new Intent(this, CartActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateCartBadge();
-    }
-
-    private void updateCartBadge() {
-        if (tvCartBadge == null) return;
-        int count = CartManager.getInstance().getTotalQuantity();
-        if (count > 0) {
-            tvCartBadge.setText(String.valueOf(count));
-            tvCartBadge.setVisibility(android.view.View.VISIBLE);
-        } else {
-            tvCartBadge.setVisibility(android.view.View.GONE);
-        }
     }
 
     private void updateTotal() {

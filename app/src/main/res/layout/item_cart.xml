@@ -43,29 +43,15 @@
                 android:maxLines="1"
                 android:ellipsize="end" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvCartItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="2dp">
-                <TextView
-                    android:id="@+id/tvCartItemOriginalPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp. 0"
-                    android:textColor="#B0A090"
-                    android:textSize="11sp"
-                    android:layout_marginEnd="6dp"
-                    android:visibility="gone" />
-                <TextView
-                    android:id="@+id/tvCartItemPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp. 8,000"
-                    android:textColor="#C8873A"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:layout_marginTop="2dp"
+                android:text="Rp. 8,000"
+                android:textColor="#C8873A"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Qty controls -->
