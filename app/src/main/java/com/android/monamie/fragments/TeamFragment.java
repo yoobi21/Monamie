@@ -41,12 +41,19 @@ public class TeamFragment extends Fragment {
 
     private void setupViewPager() {
         List<TeamMember> members = new ArrayList<>();
-        members.add(new TeamMember("Raihan Al - Ayyubi", "24131310114", "Kembarannya Ian", R.drawable.rehan, "Programmer"));
-        members.add(new TeamMember("Husein Abdul Aziz", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.img_cookie_butter, "Programmer"));
-        members.add(new TeamMember("M. Fadhli Wafi", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.img_cookie_butter, "Programmer"));
-        members.add(new TeamMember("Samsul Alam", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.img_cookie_butter, "Programmer"));
-        members.add(new TeamMember("Samsul Alam", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.img_cookie_butter, "Programmer"));
-        members.add(new TeamMember("Samsul Alam", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.img_cookie_butter, "Programmer"));
+        // Format: Name, ID, Bio, Image, Role, IG, GitHub, LinkedIn
+        members.add(new TeamMember("Nadia Eka Rahmawati", "24131310114", "Nayo", R.drawable.bird, "Programmer",
+                "https://www.instagram.com/raihan", "https://github.com/raihan", "https://www.linkedin.com/in/raihan"));
+        members.add(new TeamMember("Iqra Tri Karunia", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.cat, "Programmer",
+                "https://www.instagram.com/husein", "https://github.com/husein", "https://www.linkedin.com/in/husein"));
+        members.add(new TeamMember("Rafael Ilham", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.racoon, "Programmer",
+                "https://www.instagram.com/fadhli", "https://github.com/fadhli", "https://www.linkedin.com/in/fadhli"));
+        members.add(new TeamMember("Jepri Ramadhan", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.axo, "Programmer",
+                "https://www.instagram.com/samsul", "https://github.com/samsul", "https://www.linkedin.com/in/samsul"));
+        members.add(new TeamMember("M. Dimas Bayu", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.owl, "Programmer",
+                "https://www.instagram.com/user5", "https://github.com/user5", "https://www.linkedin.com/in/user5"));
+        members.add(new TeamMember("Cant Spell Raihan Without Ian", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.fox, "Programmer",
+                "https://www.instagram.com/user6", "https://github.com/user6", "https://www.linkedin.com/in/user6"));
 
         TeamAdapter adapter = new TeamAdapter(members);
         viewPagerTeam.setAdapter(adapter);
@@ -140,22 +147,31 @@ public class TeamFragment extends Fragment {
             // Social Media Listeners
             if (holder.ivInstagram != null) {
                 holder.ivInstagram.setOnClickListener(v -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/"));
-                    v.getContext().startActivity(intent);
+                    String url = member.getInstagramUrl();
+                    if (url != null && !url.isEmpty()) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        v.getContext().startActivity(intent);
+                    }
                 });
             }
 
             if (holder.ivGithub != null) {
                 holder.ivGithub.setOnClickListener(v -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/"));
-                    v.getContext().startActivity(intent);
+                    String url = member.getGithubUrl();
+                    if (url != null && !url.isEmpty()) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        v.getContext().startActivity(intent);
+                    }
                 });
             }
 
             if (holder.ivLinkedin != null) {
                 holder.ivLinkedin.setOnClickListener(v -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/"));
-                    v.getContext().startActivity(intent);
+                    String url = member.getLinkedinUrl();
+                    if (url != null && !url.isEmpty()) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        v.getContext().startActivity(intent);
+                    }
                 });
             }
         }

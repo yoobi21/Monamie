@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import android.graphics.Typeface;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.android.monamie.adapters.BannerAdapter;
@@ -47,9 +47,9 @@ public class HomeFragment extends Fragment {
     private TextView catAll, catCookies, catKopi;
     private BannerAdapter bannerAdapter;
     private final List<Integer> bannerImages = Arrays.asList(
-            R.drawable.banner_monamie,
-            R.drawable.img_cookie_velvet,
-            R.drawable.img_cookie_matcha
+            R.drawable.banner_ian,
+            R.drawable.banner_ian,
+            R.drawable.banner_ian
     );
 
     private final List<Product> allProducts = Arrays.asList(

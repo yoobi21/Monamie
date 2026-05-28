@@ -8,62 +8,61 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import com.android.monamie.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    // ─── Views ───────────────────────────────────────────
-    private Button btnNext;
+    private ImageView ivLogo;
 
-    // ─────────────────────────────────────────────────────
+    private ImageView ivLogo2;
+    private LinearLayout layoutText;
+    private View layoutContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupWindowInsets();
-        setupViews();
-        setupListeners();
+        ivLogo = findViewById(R.id.ivLogo);
+        ivLogo2 = findViewById(R.id.ivLogo2);
+        layoutText = findViewById(R.id.layoutText);
+        layoutContent = findViewById(R.id.layoutContent);
+
+        // Run Animations
+        Animation fadeUp = AnimationUtils.loadAnimation(this, R.anim.splash_fade_up);
+        ivLogo2.startAnimation(fadeUp);
+        ivLogo.startAnimation(fadeUp);
+        layoutText.startAnimation(fadeUp);
+
+        // Auto transition after 3 seconds
+        new android.os.Handler().postDelayed(this::onNextClicked, 3000);
     }
 
     // ══════════════════════════════════════════════════════
     //  SETUP
     // ══════════════════════════════════════════════════════
 
-    private void setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(
-                findViewById(R.id.main), (v, insets) -> {
-                    Insets systemBars =
-                            insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                    v.setPadding(
-                            systemBars.left,
-                            systemBars.top,
-                            systemBars.right,
-                            systemBars.bottom
-                    );
-                    return insets;
-                }
-        );
-    }
-
-    private void setupViews() {
-        btnNext = findViewById(R.id.btnNext);
-    }
-
-    private void setupListeners() {
-        btnNext.setOnClickListener(v -> onNextClicked());
-    }
-
-    // ══════════════════════════════════════════════════════
-    //  ACTIONS
+    // ACTIONS
     // ══════════════════════════════════════════════════════
 
     private void onNextClicked() {
-        // Arahkan ke halaman berikutnya
-         Intent intent = new Intent(this, Login.class);
-         startActivity(intent);
-         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-         finish(); // tutup splash agar tidak bisa back
+        // Cek apakah user sudah login
+        if (com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser() != null) {
+            // Jika sudah login, langsung ke Dashboard
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+        } else {
+            // Jika belum login, ke halaman Login
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        }
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish(); // tutup splash agar tidak bisa back
     }
 }
