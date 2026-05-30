@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.android.monamie.R;
 import com.android.monamie.models.Product;
 import java.text.NumberFormat;
@@ -53,7 +55,10 @@ public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.
     public void onBindViewHolder(@NonNull VH holder, int position) {
         Product product = items.get(position);
 
-        holder.ivProduct.setImageResource(product.getImageRes());
+        Glide.with(holder.itemView.getContext())
+                .load(product.getImageRes())
+                .into(holder.ivProduct);
+
         holder.tvCategory.setText(product.getCategory());
         holder.tvName.setText(product.getName());
 

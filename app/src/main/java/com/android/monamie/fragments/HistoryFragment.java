@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.android.monamie.R;
 import com.android.monamie.adapters.HistoryAdapter;
 import com.android.monamie.models.HistoryItem;
+import com.android.monamie.utils.ProductManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -85,16 +87,20 @@ public class HistoryFragment extends Fragment {
                                 String displayMenu = itemSummary.toString();
                                 if (displayMenu.isEmpty()) displayMenu = "Pesanan Mon Amie";
                                 
-                                // Ambil imageRes dari item pertama jika ada
+                                // Ambil imageRes: Prioritaskan dari Firebase (untuk Promo), fallback ke ProductManager (untuk item reguler)
                                 int firstItemImage = R.drawable.img_cookie_velvet;
                                 DataSnapshot firstItem = itemsSnapshot.getChildren().iterator().hasNext() ? 
                                         itemsSnapshot.getChildren().iterator().next() : null;
-                                if (firstItem != null && firstItem.hasChild("imageRes")) {
-                                    Object imgObj = firstItem.child("imageRes").getValue();
-                                    if (imgObj instanceof Long) {
-                                        firstItemImage = ((Long) imgObj).intValue();
-                                    } else if (imgObj instanceof Integer) {
-                                        firstItemImage = (Integer) imgObj;
+                                
+                                if (firstItem != null) {
+                                    Long fbImageRes = firstItem.child("imageRes").getValue(Long.class);
+                                    if (fbImageRes != null && fbImageRes != 0) {
+                                        firstItemImage = fbImageRes.intValue();
+                                    } else {
+                                        String firstItemName = firstItem.child("name").getValue(String.class);
+                                        if (firstItemName != null) {
+                                            firstItemImage = ProductManager.getInstance().getImageByName(firstItemName);
+                                        }
                                     }
                                 }
                                 

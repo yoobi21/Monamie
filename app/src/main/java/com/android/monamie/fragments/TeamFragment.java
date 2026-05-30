@@ -17,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.bumptech.glide.Glide;
 import com.android.monamie.R;
 import com.android.monamie.models.TeamMember;
 import com.google.android.material.card.MaterialCardView;
@@ -42,18 +44,19 @@ public class TeamFragment extends Fragment {
     private void setupViewPager() {
         List<TeamMember> members = new ArrayList<>();
         // Format: Name, ID, Bio, Image, Role, IG, GitHub, LinkedIn
-        members.add(new TeamMember("Nadia Eka Rahmawati", "24131310114", "Nayo", R.drawable.bird, "Programmer",
-                "https://www.instagram.com/raihan", "https://github.com/raihan", "https://www.linkedin.com/in/raihan"));
-        members.add(new TeamMember("Iqra Tri Karunia", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.cat, "Programmer",
-                "https://www.instagram.com/husein", "https://github.com/husein", "https://www.linkedin.com/in/husein"));
-        members.add(new TeamMember("Rafael Ilham", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.racoon, "Programmer",
-                "https://www.instagram.com/fadhli", "https://github.com/fadhli", "https://www.linkedin.com/in/fadhli"));
-        members.add(new TeamMember("Jepri Ramadhan", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.axo, "Programmer",
-                "https://www.instagram.com/samsul", "https://github.com/samsul", "https://www.linkedin.com/in/samsul"));
-        members.add(new TeamMember("M. Dimas Bayu", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.owl, "Programmer",
-                "https://www.instagram.com/user5", "https://github.com/user5", "https://www.linkedin.com/in/user5"));
-        members.add(new TeamMember("Cant Spell Raihan Without Ian", "24131310114", "Expert in pastry and cookie design with 10 years experience.", R.drawable.fox, "Programmer",
-                "https://www.instagram.com/user6", "https://github.com/user6", "https://www.linkedin.com/in/user6"));
+        members.add(new TeamMember("Nadia Eka Rahmawati", "24131310098", "Nayo", R.drawable.nadia, "Canva Master",
+                "https://www.instagram.com/just_uj4nn?igsh=MWsxM3R6c2ptY3FvMw=="));
+        members.add(new TeamMember("Iqra Tri Karunia", "24131310056", "\"Kajima... \".", R.drawable.ica, "Owner",
+                "https://www.instagram.com/iqratr?igsh=MTBydmd6YzVxaTBidg=="));
+        members.add(new TeamMember("Rafael Ilham", "24131310112", "Saya akan lawan", R.drawable.el, "Co-Owner",
+                "https://www.instagram.com/rafael.ilham29?igsh=cmVmcWI1bG5va256"));
+        members.add(new TeamMember("Jepri Ramadhan", "24131310058", "\"Aku akan menjadi Raja Bajak Laut!\"", R.drawable.jepri, "Canva Enjoyer",
+                "https://www.instagram.com/jepz.jr?igsh=Nzg2cnp2OTR2ZGli"));
+        members.add(new TeamMember("M. Dimas Bayu", "24131310060", "maap poto gwnya agak komuk", R.drawable.masbay, "Logo Maker",
+                "https://www.instagram.com/massbayyy_____?igsh=MWkwbXhiMDdzbWhzdw=="));
+        members.add(new TeamMember("Cant Spell Raihan Without Ian", "24131310114", "The Heart Burns Even Though The Rain Falls", R.drawable.ian1, "Ice Cream Enthusiast",
+                "https://cat-bounce.com/"));
+
 
         TeamAdapter adapter = new TeamAdapter(members);
         viewPagerTeam.setAdapter(adapter);
@@ -124,10 +127,15 @@ public class TeamFragment extends Fragment {
             holder.tvLocation.setText(member.getLocation());
             holder.tvStats.setText(member.getStats());
             holder.tvDesc.setText(member.getDescription());
-            holder.ivPhoto.setImageResource(member.getImageRes());
+            
+            Glide.with(holder.itemView.getContext())
+                    .load(member.getImageRes())
+                    .into(holder.ivPhoto);
             
             if (holder.ivPhotoBack != null) {
-                holder.ivPhotoBack.setImageResource(member.getImageRes());
+                Glide.with(holder.itemView.getContext())
+                        .load(member.getImageRes())
+                        .into(holder.ivPhotoBack);
             }
 
             // Reset status kartu ke tampilan depan (front) saat didaur ulang (recycling)
@@ -155,26 +163,10 @@ public class TeamFragment extends Fragment {
                 });
             }
 
-            if (holder.ivGithub != null) {
-                holder.ivGithub.setOnClickListener(v -> {
-                    String url = member.getGithubUrl();
-                    if (url != null && !url.isEmpty()) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        v.getContext().startActivity(intent);
-                    }
-                });
+
             }
 
-            if (holder.ivLinkedin != null) {
-                holder.ivLinkedin.setOnClickListener(v -> {
-                    String url = member.getLinkedinUrl();
-                    if (url != null && !url.isEmpty()) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        v.getContext().startActivity(intent);
-                    }
-                });
-            }
-        }
+
 
         @Override
         public int getItemCount() {
@@ -196,8 +188,7 @@ public class TeamFragment extends Fragment {
                 ivPhoto = itemView.findViewById(R.id.ivMemberPhoto);
                 ivPhotoBack = itemView.findViewById(R.id.ivMemberPhotoBack);
                 ivInstagram = itemView.findViewById(R.id.ivInstagram);
-                ivGithub = itemView.findViewById(R.id.ivGithub);
-                ivLinkedin = itemView.findViewById(R.id.ivLinkedin);
+
                 cardFront = itemView.findViewById(R.id.cardFront);
                 cardBack = itemView.findViewById(R.id.cardBack);
                 

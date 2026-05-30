@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.android.monamie.R;
 import com.android.monamie.models.CartItem;
 import com.android.monamie.utils.CartManager;
@@ -54,7 +56,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
     @Override
     public void onBindViewHolder(@NonNull VH h, int pos) {
         CartItem item = items.get(pos);
-        h.ivItem.setImageResource(item.getImageRes());
+        
+        Glide.with(h.itemView.getContext())
+                .load(item.getImageRes())
+                .into(h.ivItem);
+
         h.tvName.setText(item.getName());
         h.tvPrice.setText("Rp. " + fmt.format(item.getPrice()));
         h.tvQty.setText(String.valueOf(item.getQuantity()));

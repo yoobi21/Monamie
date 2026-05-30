@@ -12,6 +12,11 @@ import com.android.monamie.R;
 import com.android.monamie.adapters.CartAdapter;
 import com.android.monamie.utils.CartManager;
 import com.google.android.material.button.MaterialButton;
+import androidx.activity.EdgeToEdge;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
+import android.view.ViewGroup;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -26,6 +31,7 @@ public class CartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
@@ -49,6 +55,20 @@ public class CartActivity extends AppCompatActivity {
         rvCart.setAdapter(adapter);
 
         refreshUI();
+
+        // Menyesuaikan Toolbar (Top) dan Bottom Bar dengan System Bar (Edge-to-Edge)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cartToolbar), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(v.getPaddingLeft(), insets.top, v.getPaddingRight(), v.getPaddingBottom());
+            return windowInsets;
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.llCartBottomContent), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Berikan padding bawah sesuai tinggi navigation bar agar konten tidak tertutup
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), insets.bottom + 16);
+            return windowInsets;
+        });
 
         btnCheckout.setOnClickListener(v -> {
             startActivity(new Intent(this, CheckoutActivity.class));

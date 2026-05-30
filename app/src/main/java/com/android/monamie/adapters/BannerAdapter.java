@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.android.monamie.R;
 import java.util.List;
 
@@ -34,7 +36,11 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
         // Use modulo to create endless scroll effect
         int realPosition = position % bannerImages.size();
-        holder.ivBanner.setImageResource(bannerImages.get(realPosition));
+        
+        Glide.with(holder.itemView.getContext())
+                .load(bannerImages.get(realPosition))
+                .into(holder.ivBanner);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onBannerClick(realPosition);
         });
