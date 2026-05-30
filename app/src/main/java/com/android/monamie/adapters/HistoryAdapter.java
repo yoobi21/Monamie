@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.android.monamie.R;
 import com.android.monamie.models.HistoryItem;
 import java.util.List;
@@ -33,7 +35,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.tvDate.setText(item.getDate());
         holder.tvStatus.setText(item.getStatus());
         holder.tvTotal.setText(item.getTotalAmount());
-        holder.ivItem.setImageResource(item.getImageRes());
+        
+        Glide.with(holder.itemView.getContext())
+                .load(item.getImageRes())
+                .into(holder.ivItem);
     }
 
     @Override

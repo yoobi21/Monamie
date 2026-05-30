@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:text="Alex Carter"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -182,28 +182,6 @@
                             android:clickable="true"
                             android:focusable="true"/>
 
-                        <ImageView
-                            android:id="@+id/ivGithub"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:padding="6dp"
-                            android:src="@drawable/mdi_github"
-                            android:background="@drawable/bg_icon_circle"
-                            app:tint="#C8873A"
-                            android:layout_marginEnd="12dp"
-                            android:clickable="true"
-                            android:focusable="true"/>
-
-                        <ImageView
-                            android:id="@+id/ivLinkedin"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:padding="6dp"
-                            android:src="@drawable/mdi_linkedin"
-                            android:background="@drawable/bg_icon_circle"
-                            app:tint="#C8873A"
-                            android:clickable="true"
-                            android:focusable="true"/>
 
                     </LinearLayout>
 

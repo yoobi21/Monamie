@@ -11,6 +11,8 @@ firebaseAuth = "24.1.0"
 firebaseFirestore = "26.3.0"
 playServicesAnalyticsImpl = "18.2.0"
 firebaseDatabase = "22.0.1"
+glide = "4.16.0"
+firebaseBom = "33.10.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,6 +26,10 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImpl" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

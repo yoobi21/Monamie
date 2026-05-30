@@ -19,6 +19,7 @@
 
     <!-- ───── KONTEN UTAMA ───── -->
     <LinearLayout
+        android:id="@+id/layoutContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -27,74 +28,61 @@
         android:paddingBottom="40dp">
 
         <!-- Logo di tengah atas -->
+
+        <!-- Spacer fleksibel -->
         <ImageView
             android:id="@+id/ivLogo"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            android:contentDescription="Mon Amie Logo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo" />
+
+        <!-- ───── FOOTER TEXT ───── -->
+
+        <!-- Tombol Next (Hidden by default for auto splash) -->
+
+        <LinearLayout
+            android:id="@+id/layoutText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Renyahnya Cookies, Legitnya Kopi"
+                android:textColor="#9E8070"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivLogo2"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/logo"
-            android:scaleType="fitCenter"
-            android:contentDescription="Mon Amie Logo"/>
+            android:orientation="vertical"
 
-        <!-- Spacer fleksibel -->
-        <View
+            android:src="@drawable/cc" />
+
+        <Button
+            android:id="@+id/btnNext"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <!-- ───── RECTANGLE BLUR (Background untuk text) ───── -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="#16A47251"
-            app:cardElevation="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Welcome Text -->
-                <TextView
-                    android:id="@+id/tvWelcome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Welcome"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="#A47251"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/tvSubtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Let\'s Start Your Days!"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="#A47251"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginBottom="24dp"/>
-
-                <!-- Tombol Next -->
-                <Button
-                    android:id="@+id/btnNext"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="Next"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:backgroundTint="#A47251"
-                    android:stateListAnimator="@null"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+            android:layout_height="56dp"
+            android:backgroundTint="#A47251"
+            android:stateListAnimator="@null"
+            android:text="Mulai Sekarang"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

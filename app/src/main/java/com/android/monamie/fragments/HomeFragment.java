@@ -7,19 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import android.graphics.Typeface;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.android.monamie.adapters.BannerAdapter;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 import com.android.monamie.models.CartItem;
 import com.android.monamie.utils.CartManager;
+import com.android.monamie.utils.ProductManager;
 import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,9 @@ import com.android.monamie.adapters.ProductCardAdapter;
 import com.android.monamie.models.Product;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,21 +49,11 @@ public class HomeFragment extends Fragment {
     private LinearLayout layoutIndicators;
     private EditText etSearch;
     private TextView catAll, catCookies, catKopi;
-    private BannerAdapter bannerAdapter;
+    
     private final List<Integer> bannerImages = Arrays.asList(
-            R.drawable.banner_monamie,
-            R.drawable.img_cookie_velvet,
-            R.drawable.img_cookie_matcha
-    );
-
-    private final List<Product> allProducts = Arrays.asList(
-            new Product(1, "Red Velvet Cookie", "Kukis", 8000, R.drawable.img_cookie_velvet),
-            new Product(2, "Matcha Cookie",      "Kukis", 9000, R.drawable.img_cookie_matcha),
-            new Product(3, "Choco Chip Cookie",  "Kukis", 7000, R.drawable.img_cookie_choco),
-            new Product(4, "Butter Cookie",      "Kukis", 6000, R.drawable.img_cookie_butter),
-            new Product(5, "Americano",          "Kopi",    15000, R.drawable.coffee_americano),
-            new Product(6, "Caffè Latte",        "Kopi",    12000, R.drawable.coffee_latte),
-            new Product(7, "Matcha",         "Kopi",    16000, R.drawable.coffee_matcha)
+            R.drawable.banner_ian,
+            R.drawable.banner_juun,
+            R.drawable.banner_carmen
     );
 
     @Nullable
@@ -74,6 +68,13 @@ public class HomeFragment extends Fragment {
         setupBanner();
         setupSearch();
         updateCartBadge();
+
+        // Adjust for Edge-to-Edge
+        ViewCompat.setOnApplyWindowInsetsListener(view.findViewById(R.id.topBarContainer), (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(v.getPaddingLeft(), insets.top, v.getPaddingRight(), v.getPaddingBottom());
+            return windowInsets;
+        });
         
         return view;
     }
@@ -136,17 +137,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void showCategory(String category) {
+        if (getContext() == null) return;
         resetCategoryStyles();
         
-        List<Product> filteredList = new java.util.ArrayList<>();
+        List<Product> filteredList = new ArrayList<>();
         Typeface boldFont = ResourcesCompat.getFont(getContext(), R.font.lato_bold);
 
         if (category.equals("All")) {
             catAll.setSelected(true);
             catAll.setTextColor(android.graphics.Color.parseColor("#C8873A"));
             catAll.setTypeface(boldFont);
-            tvSectionTitle.setText("For You");
-            filteredList.addAll(allProducts);
+            tvSectionTitle.setText(getString(R.string.title_for_you));
+            filteredList.addAll(ProductManager.getInstance().getAllProducts());
         } else {
             TextView selectedView = null;
             if (category.equals("Kukis")) selectedView = catCookies;
@@ -159,17 +161,18 @@ public class HomeFragment extends Fragment {
             }
             tvSectionTitle.setText(category);
             
-            for (Product p : allProducts) {
+            for (Product p : ProductManager.getInstance().getAllProducts()) {
                 if (p.getCategory().equalsIgnoreCase(category)) {
                     filteredList.add(p);
                 }
             }
         }
 
-        updateRecyclerView(filteredList, false);
+        updateRecyclerView(filteredList);
     }
 
     private void resetCategoryStyles() {
+        if (getContext() == null) return;
         int normalText = android.graphics.Color.parseColor("#9E8070");
         Typeface regularFont = ResourcesCompat.getFont(getContext(), R.font.lato_regular);
         
@@ -186,14 +189,14 @@ public class HomeFragment extends Fragment {
         catKopi.setTypeface(regularFont);
     }
 
-    private void updateRecyclerView(List<Product> list, boolean isEndless) {
+    private void updateRecyclerView(List<Product> list) {
+        if (getContext() == null) return;
+        if (rvProducts.getLayoutManager() == null) {
+            rvProducts.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(getContext(), 2));
+        }
         ProductCardAdapter adapter = new ProductCardAdapter(list, this::openProductDetail);
-
-        // Always use GridLayoutManager with 2 columns
-        rvProducts.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(getContext(), 2));
-        
         rvProducts.setAdapter(adapter);
-        rvProducts.scheduleLayoutAnimation();
+        rvProducts.setNestedScrollingEnabled(false); 
     }
 
     private void openProductDetail(Product product) {
@@ -204,6 +207,7 @@ public class HomeFragment extends Fragment {
         intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_PRICE, product.getPrice());
         intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_IMG,   product.getImageRes());
         intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT_DESC,  "Cookie lezat pilihan Mon Amie.");
+        intent.putExtra("product_stock", product.getStock());
         startActivity(intent);
         if (getActivity() != null) {
             getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -225,61 +229,69 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupBanner() {
-        bannerAdapter = new BannerAdapter(bannerImages, position -> {
+        BannerAdapter adapter = new BannerAdapter(bannerImages, position -> {
             int index = position % bannerImages.size();
             String comboId;
             String comboName;
             int promoPrice;
             int originalPrice;
             int comboImage = bannerImages.get(index);
+            int comboImageRes = bannerImages.get(index);
 
             if (index == 0) {
-                // Banner 1: Combo Mon Amie 1 (1 Kopi + 1 Kukis)
                 comboId = "PROMO_COMBO_1";
-                comboName = "Combo Mon Amie 1 (1 Kopi + 1 Kukis)";
-                promoPrice = 15000;
-                originalPrice = 20000;
+                comboName = "Buy 2 Get 1 Mon Amie";
+                promoPrice = 16000;
+                originalPrice = 24000;
+                comboImageRes = R.drawable.combo1;
             } else if (index == 1) {
-                // Banner 2: Combo Mon Amie 2 (1 Kopi + 2 Kukis)
                 comboId = "PROMO_COMBO_2";
-                comboName = "Combo Mon Amie 2 (1 Kopi + 2 Kukis)";
+                comboName = "Combo Mon Amie 2 (2 Kopi + 1 Kukis)";
                 promoPrice = 22000;
                 originalPrice = 30000;
+                comboImageRes = R.drawable.combo_1;
+
             } else {
-                // Banner 3: Combo Mon Amie 3 (2 Kopi + 3 Kukis)
                 comboId = "PROMO_COMBO_3";
-                comboName = "Combo Mon Amie 3 (2 Kopi + 3 Kukis)";
-                promoPrice = 45000;
-                originalPrice = 60000;
+                comboName = "1+3 Hangat Bertiga (1 Kopi + 3 Red Velvet Cookie)";
+                promoPrice = 34000;
+                originalPrice = 40000;
+                comboImageRes = R.drawable.combo3;
             }
 
-            // Agar saat diklik berulang kali jumlahnya bertambah (akumulasi)
-            // kita tidak lagi menghapus item lama sebelum menambah yang baru.
+            CartManager cm = CartManager.getInstance();
+            boolean alreadyInCart = false;
+            for (CartItem item : cm.getItems()) {
+                if (item.getProductId().equals(comboId)) {
+                    alreadyInCart = true;
+                    break;
+                }
+            }
 
-            CartManager.getInstance().addItem(new CartItem(
-                    comboId,
-                    comboName,
-                    promoPrice,
-                    originalPrice,
-                    1,
-                    comboImage,
-                    true // isPromo = true
-            ));
+            if (alreadyInCart) {
+                Toast.makeText(getContext(), comboName + " sudah ada di keranjang (Limit 1)!", Toast.LENGTH_SHORT).show();
+            } else {
+                cm.addItem(new CartItem(
+                        comboId,
+                        comboName,
+                        promoPrice,
+                        originalPrice,
+                        1,
+                        comboImageRes,
+                        true
+                ));
+                updateCartBadge();
+                Toast.makeText(getContext(), comboName + " ditambahkan!", Toast.LENGTH_SHORT).show();
+            }
             
-            updateCartBadge();
-            Toast.makeText(getContext(), comboName + " ditambahkan!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getActivity(), CartActivity.class));
+            Intent intent = new Intent(getActivity(), CartActivity.class);
+            startActivity(intent);
             if (getActivity() != null) {
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
-        vpBanner.setAdapter(bannerAdapter);
-
-        // Set to middle so it can scroll both ways
-        int middle = Integer.MAX_VALUE / 2;
-        int startPos = middle - (middle % bannerImages.size());
-        vpBanner.setCurrentItem(startPos, false);
-
+        vpBanner.setAdapter(adapter);
+        
         setupIndicators(bannerImages.size());
         updateIndicators(0);
 
@@ -287,9 +299,38 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                updateIndicators(position % bannerImages.size());
+                if (!bannerImages.isEmpty()) {
+                    updateIndicators(position % bannerImages.size());
+                }
             }
         });
+    }
+
+    private void setupIndicators(int count) {
+        if (layoutIndicators == null || getContext() == null) return;
+        layoutIndicators.removeAllViews();
+        ImageView[] indicators = new ImageView[count];
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(8, 0, 8, 0);
+
+        for (int i = 0; i < count; i++) {
+            indicators[i] = new ImageView(getContext());
+            indicators[i].setImageResource(R.drawable.indicator_dot);
+            indicators[i].setLayoutParams(params);
+            layoutIndicators.addView(indicators[i]);
+        }
+    }
+
+    private void updateIndicators(int index) {
+        if (layoutIndicators == null) return;
+        int childCount = layoutIndicators.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView imageView = (ImageView) layoutIndicators.getChildAt(i);
+            if (imageView != null) {
+                imageView.setSelected(i == index);
+            }
+        }
     }
 
     private void setupSearch() {
@@ -310,47 +351,18 @@ public class HomeFragment extends Fragment {
     private void filterProducts(String query) {
         List<Product> filteredList = new ArrayList<>();
         if (query.isEmpty()) {
-            // If search is empty, go back to showing the current selected category or "All"
-            // For simplicity, let's just show what "showCategory" would show
-            // Or just call showCategory again?
-            // Let's assume searching is a global action.
             showCategory("All");
             return;
         }
 
-        for (Product p : allProducts) {
+        for (Product p : ProductManager.getInstance().getAllProducts()) {
             if (p.getName().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(p);
             }
         }
 
-        tvSectionTitle.setText("Hasil Pencarian: " + query);
-        updateRecyclerView(filteredList, false);
-        
-        // Deselect categories when searching
+        tvSectionTitle.setText(getString(R.string.search_results, query));
+        updateRecyclerView(filteredList);
         resetCategoryStyles();
-    }
-
-    private void setupIndicators(int count) {
-        layoutIndicators.removeAllViews();
-        ImageView[] indicators = new ImageView[count];
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(8, 0, 8, 0);
-
-        for (int i = 0; i < count; i++) {
-            indicators[i] = new ImageView(getContext());
-            indicators[i].setImageResource(R.drawable.indicator_dot);
-            indicators[i].setLayoutParams(params);
-            layoutIndicators.addView(indicators[i]);
-        }
-    }
-
-    private void updateIndicators(int index) {
-        int childCount = layoutIndicators.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ImageView imageView = (ImageView) layoutIndicators.getChildAt(i);
-            imageView.setSelected(i == index);
-        }
     }
 }

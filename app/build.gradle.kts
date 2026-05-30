@@ -1,4 +1,4 @@
- plugins {
+plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
 }
@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.play.services.analytics.impl)
     implementation(libs.firebase.database)
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

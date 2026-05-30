@@ -14,10 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.monamie.R;
 import com.android.monamie.models.CartItem;
 import com.android.monamie.utils.CartManager;
+import com.android.monamie.utils.ProductManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
+import android.view.ViewGroup;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -104,6 +109,16 @@ public class CheckoutActivity extends AppCompatActivity {
         } else {
             tvOriginalTotal.setVisibility(View.GONE);
         }
+
+        // Adjust for system navigation bar (Edge-to-Edge)
+        ViewCompat.setOnApplyWindowInsetsListener(btnOrder, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            // Memberikan margin bawah yang aman (16dp + tinggi system navigation bar)
+            mlp.bottomMargin = insets.bottom + (int) (16 * getResources().getDisplayMetrics().density);
+            v.setLayoutParams(mlp);
+            return windowInsets;
+        });
 
         btnOrder.setOnClickListener(v -> submitOrder(subtotal, total));
     }
@@ -255,6 +270,11 @@ public class CheckoutActivity extends AppCompatActivity {
                     if (isProcessed[0]) return;
                     isProcessed[0] = true;
                     timeoutHandler.removeCallbacks(timeoutRunnable);
+                    
+                    // Kurangi stok produk
+                    for (CartItem item : CartManager.getInstance().getItems()) {
+                        ProductManager.getInstance().decreaseStock(item.getName(), item.getQuantity());
+                    }
                     
                     CartManager.getInstance().clear();
                     
