@@ -288,7 +288,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
                     if (paymentMethod.equals("COD")) {
                         try {
-                            String adminPhone = "6281290679905";
+                            String adminPhone = "Your Number Phone";
                             String url = "https://api.whatsapp.com/send?phone=" + adminPhone + "&text=" + Uri.encode(messageText);
                             Intent waIntent = new Intent(Intent.ACTION_VIEW);
                             waIntent.setData(Uri.parse(url));
